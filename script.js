@@ -1,20 +1,21 @@
 const canvas = document.getElementById("main-canvas");
 /** @type {CanvasRenderingContext2D} */
 const ctx = canvas.getContext('2d');
+const particleArray = [];
+let hue = 0;
+const mouse = {
+    x: undefined,
+    y: undefined
+}
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const particleArray = [];
-let hue = 0;
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 })
 
-const mouse = {
-    x: undefined,
-    y: undefined
-}
 canvas.addEventListener('click', (event) => {
     mouse.x = event.x;
     mouse.y = event.y;
@@ -29,16 +30,6 @@ canvas.addEventListener('mousemove', (event) => {
     particleArray.push(new Particle());
 
 })
-
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = 'rgba(0,0,0,0.02)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    handleParticles();
-    requestAnimationFrame(animate);
-    hue += 2;
-}
-animate();
 
 class Particle {
     constructor() {
@@ -60,6 +51,16 @@ class Particle {
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
     }
+}
+
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.fillStyle = 'rgba(0,0,0,0.02)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    handleParticles();
+    requestAnimationFrame(animate);
+    hue += 2;
 }
 
 function init() {
@@ -96,3 +97,4 @@ function handleParticles() {
 }
 
 init();
+animate();
